@@ -1,0 +1,218 @@
+[
+  {
+    "id": 1,
+    "nombre": "Remera adidas negra",
+    "precio": 1500,
+    "img": "./img2/remera-adidas-negra.jfif"
+  },
+  {
+    "id": 2,
+    "nombre": "Remera Converse",
+    "precio": 1400,
+    "img": "./img2/remera-converse-m.jfif"
+  },
+  {
+    "id": 3,
+    "nombre": "Remera Converse",
+    "precio": 1700,
+    "img": "./img2/remera-converse-m2.jfif"
+  },
+  {
+    "id": 4,
+    "nombre": "Remera Converse",
+    "precio": 1500,
+    "img": "img2/remera-converse.jfif"
+  },
+  {
+    "id": 5,
+    "nombre": "Remera Nike",
+    "precio": 1800,
+    "img": "./img2/remera-nike-h.jpg"
+  },
+  {
+    "id": 6,
+    "nombre": "Zapatillas adidas court",
+    "precio": 700,
+    "img": "./img2/zapatilla-adidas-court.jfif"
+  },
+  {
+    "id": 7,
+    "nombre": "Zapatillas fila",
+    "precio": 2500,
+    "img": "./img2/zapatilla-fila-mujer.jfif"
+  },
+  {
+    "id": 8,
+    "nombre": "Zapatillas nike airmax excee",
+    "precio": 5800,
+    "img": "./img2/zapatilla-airmax-excee-m.jfif"
+  },
+  {
+    "id": 9,
+    "nombre": "Zapatillas nike airmax",
+    "precio": 6500,
+    "img": "./img2/zapatilla-airmax-sc-m.jfif"
+  },
+  {
+    "id": 10,
+    "nombre": "Zapatillas converse",
+    "precio": 700,
+    "img": "./img2/zapatilla-chuk-taylor-converse-m.jfif"
+  },
+  {
+    "id": 11,
+    "nombre": "Zapatillas fila racer advantage",
+    "precio": 3200,
+    "img": "./img2/zapatilla-fila-racer-advantage-m.jfif"
+  },
+  {
+    "id": 12,
+    "nombre": "Zapatillas fila racer advantage",
+    "precio": 2850,
+    "img": "./img2/zapatilla-fila-ranger-advance-h.jfif"
+  },
+  {
+    "id": 13,
+    "nombre": "Zapatillas nike airmax",
+    "precio": 8700,
+    "img": "./img2/zapatilla-nike-air-max.jfif"
+  },
+  {
+    "id": 14,
+    "nombre": "Zapatillas nike airforce",
+    "precio": 7800,
+    "img": "./img2/zapatilla-nike-airforce.jfif"
+  },
+  {
+    "id": 15,
+    "nombre": "Zapatillas puma caven",
+    "precio": 3400,
+    "img": "./img2/zapatilla-puma-caven.jfif"
+  },
+  {
+    "id": 16,
+    "nombre": "Short converse",
+    "precio": 1800,
+    "img": "./img2/short-converse-m.jfif"
+  },
+  {
+    "id": 17,
+    "nombre": "Short nike",
+    "precio": 2100,
+    "img": "./img2/short-nike-cahllenger-m.jfif"
+  },
+  {
+    "id": 18,
+    "nombre": "Campera boca",
+    "precio": 11500,
+    "img": "./img2/campera-adidas-boca.jpg"
+  },
+  {
+    "id": 19,
+    "nombre": "Short river",
+    "precio": 2600,
+    "img": "./img2/short-river.jfif"
+  },
+  {
+    "id": 20,
+    "nombre": "Campera independiente",
+    "precio": 8700,
+    "img": "./img2/campera-independiente-m.jfif"
+  },
+  {
+    "id": 21,
+    "nombre": "Camiseta Seleccion Argenina",
+    "precio": 5800,
+    "img": "img2/camiseta-arg-hombre.jfif"
+  },
+  {
+    "id": 22,
+    "nombre": "Camiseta Seleccion Argentina",
+    "precio": 3200,
+    "img": "img2/camiseta-argentina.jfif"
+  },
+  {
+    "id": 23,
+    "nombre": "Camiseta lanus",
+    "precio": 2900,
+    "img": "img2/camiseta-lanus.jpg"
+  },
+  {
+    "id": 24,
+    "nombre": "Camiseta racing",
+    "precio": 3250,
+    "img": "img2/camiseta-racing-h.jfif"
+  },
+  {
+    "id": 25,
+    "nombre": "Camiseta river",
+    "precio": 3800,
+    "img": "img2/camiseta-river.jfif"
+  },
+  {
+    "id": 26,
+    "nombre": "Botines adidas sense",
+    "precio": 9900,
+    "img": "./img2/botines-de-futbol-adidas-sense.jpg"
+  },
+  {
+    "id": 27,
+    "nombre": "Botines nike",
+    "precio": 10700,
+    "img": "./img2/botines-nike-h.jpg"
+  },
+  {
+    "id": 28,
+    "nombre": "Botines nike",
+    "precio": 5500,
+    "img": "./img2/botines-nike-n.jpg"
+  },
+  {
+    "id": 29,
+    "nombre": "Ojotas adidas hombre",
+    "precio": 2100,
+    "img": "./img2/ojota-adidas.jfif"
+  },
+  {
+    "id": 30,
+    "nombre": "Ojotas puma mujer",
+    "precio": 1800,
+    "img": "./img2/ojota-puma-m.jpg"
+  },
+  {
+    "id": 31,
+    "nombre": "Buzo adidas",
+    "precio": 6600,
+    "img": "./img2/buzo-adidas-h.jpg"
+  },
+  {
+    "id": 32,
+    "nombre": "Buzo adidas",
+    "precio": 4900,
+    "img": "./img2/buzo-adidas-m.jpg"
+  },
+  {
+    "id": 33,
+    "nombre": "Buzo adidas",
+    "precio": 2600,
+    "img": "./img2/buzo-adidas-n.jpg"
+  },
+  {
+    "id": 34,
+    "nombre": "Buzo converse",
+    "precio": 3600,
+    "img": "./img2/buzo-converse-m.jfif"
+  },
+  {
+    "id": 35,
+    "nombre": "Buzo nike",
+    "precio": 3200,
+    "img": "./img2/buzo-nike-h.jpg"
+  },
+  {
+    "id": 36,
+    "nombre": "Buzo nike",
+    "precio": 2200,
+    "img": "./img2/buzo-nike-m.jpg"
+  }
+]
