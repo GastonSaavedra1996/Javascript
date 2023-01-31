@@ -9121,3 +9121,68 @@
 cursor: pointer;
   }
   
+  .imagen{
+    max-width:100%;
+}
+
+a{
+    cursor:pointer;
+}
+.alerta{
+    font-weight:700;
+}
+body{
+    background-color: #2c3e50;
+    overflow-x: hidden;
+}
+.modal-contenedor{
+    display:flex;
+    align-items: center;
+    gap:2rem;
+}
+.img-carrito{
+    width:200px;
+    padding:20px;
+} 
+.modal-content{
+    background-color: #fff;
+}
+.parrafo{
+    font-weight: 900;
+    font-style: italic;
+}
+#precioTotal{
+    margin:0;
+    padding:0;
+}
+a{
+    text-decoration: none;
+}
+.boton{
+    opacity:0;
+}
+.card-principal{
+border: 2px solid black;
+}
+.card-principal:hover{
+cursor: pointer;
+}
+#contenedor{
+   justify-content: center;
+}
+.text-white{
+    font-size: 30px;
+}
+th{
+    color: #fff;
+}
+td{
+    color: #fff;
+}
+label{
+    color: #fff;
+}
+h2{
+    color: #fff;
+}
+

@@ -1,138 +1,521 @@
-const cards = document.getElementById('cards')
-const items = document.getElementById('items')
-const footer = document.getElementById('footer')
-const templateCard = document.getElementById('template-card').content
-const templateFooter = document.getElementById('template-footer').content
-const templateCarrito = document.getElementById('template-carrito').content
-const fragment = document.createDocumentFragment()
-
-let carrito = {}
-
-// Eventos
-// El evento DOMContentLoaded es disparado cuando el documento HTML ha sido completamente cargado y parseado
-document.addEventListener('DOMContentLoaded', e => { fetchData() });
-cards.addEventListener('click', e => { addCarrito(e) });
-items.addEventListener('click', e => { btnAumentarDisminuir(e) })
-
-// Traer productos
-const fetchData = async () => {
-    const res = await fetch('./productos/elementos.json');
-    const data = await res.json()
-    // console.log(data)
-    pintarCards(data)
-}
-
-// Pintar productos
-const pintarCards = data => {
-    data.forEach(item => {
-        templateCard.querySelector('h5').textContent = item.title
-        templateCard.querySelector('p').textContent = item.precio
-        templateCard.querySelector("img").setAttribute("src", item.img);
-        templateCard.querySelector('button').dataset.id = item.id
-        const clone = templateCard.cloneNode(true)
-        fragment.appendChild(clone)
-    })
-    cards.appendChild(fragment)
-}
-
-// Agregar al carrito
-const addCarrito = e => {
-    if (e.target.classList.contains('btn-dark')) {
-        // console.log(e.target.dataset.id)
-        // console.log(e.target.parentElement)
-        setCarrito(e.target.parentElement)
+const stockProductos = [
+    {
+      id: 1,
+      nombre: "Remera adidas negra",
+      cantidad: 1,
+      desc: "remera adidas hombre",
+      precio: 1500,
+      img: "./img2/remera-adidas-negra.jfif",
+    },
+    {
+      id: 2,
+      nombre: "Remera Converse",
+      cantidad: 1,
+      desc: "remera converse mujer",
+      precio: 1400,
+      img: "./img2/remera-converse-m.jfif",
+    },
+    {
+      id: 3,
+      nombre: "Remera Converse",
+      cantidad: 1,
+      desc: "remera converse mujer",
+      precio: 1700,
+      img: "./img2/remera-converse-m2.jfif",
+    },
+    {
+      id: 4,
+      nombre: "Remera Converse",
+      cantidad: 1,
+      desc: "remera converse hombre",
+      precio: 1500,
+      img: "img2/remera-converse.jfif",
+    },
+    {
+      id: 5,
+      nombre: "Remera Nike",
+      cantidad: 1,
+      desc: "remera nike hombre",
+      precio: 1800,
+      img: "./img2/remera-nike-h.jpg",
+    },
+    {
+      id: 6,
+      nombre: "Zapatillas adidas court",
+      cantidad: 1,
+      desc: "zapatillas adidas hombre",
+      precio: 700,
+      img: "./img2/zapatilla-adidas-court.jfif",
+    },
+    {
+      id: 7,
+      nombre: "Zapatillas fila",
+      cantidad: 1,
+      desc: "zapatillas mujer fila",
+      precio: 2500,
+      img: "./img2/zapatilla-fila-mujer.jfif",
+    },
+    {
+      id: 8,
+      nombre: "Zapatillas nike airmax excee",
+      cantidad: 1,
+      desc: "zapatillas nike mujer",
+      precio: 5800,
+      img: "./img2/zapatilla-airmax-excee-m.jfif",
+    },
+    {
+      id: 9,
+      nombre: "Zapatillas nike airmax",
+      cantidad: 1,
+      desc: "zapatilla nike mujer",
+      precio: 6500,
+      img: "./img2/zapatilla-airmax-sc-m.jfif",
+    },
+    {
+      id: 10,
+      nombre: "Zapatillas converse",
+      cantidad: 1,
+      desc: "zapatillas mujer converse",
+      precio: 700,
+      img: "./img2/zapatilla-chuk-taylor-converse-m.jfif",
+    },
+    {
+      id: 11,
+      nombre: "Zapatillas fila racer advantage",
+      cantidad: 1,
+      desc: "zapatillas fila mujer",
+      precio: 3200,
+      img: "./img2/zapatilla-fila-racer-advantage-m.jfif",
+    },
+    {
+      id: 12,
+      nombre: "Zapatillas fila racer advantage",
+      cantidad: 1,
+      desc: "zapatillas fila hombre",
+      precio: 2850,
+      img: "./img2/zapatilla-fila-ranger-advance-h.jfif",
+    },
+    {
+      id: 13,
+      nombre: "Zapatillas nike airmax",
+      cantidad: 1,
+      desc: "zapatillas airmax hombre",
+      precio: 8700,
+      img: "./img2/zapatilla-nike-air-max.jfif",
+    },
+    {
+      id: 14,
+      nombre: "Zapatillas nike airforce",
+      cantidad: 1,
+      desc: "zapatillas nike hombre",
+      precio: 7800,
+      img: "./img2/zapatilla-nike-airforce.jfif",
+    },
+    {
+      id: 15,
+      nombre: "Zapatillas puma caven",
+      cantidad: 1,
+      desc: "zapatillas puma hombre",
+      precio: 3400,
+      img: "./img2/zapatilla-puma-caven.jfif",
+    },
+    {
+      id: 16,
+      nombre: "Short converse",
+      cantidad: 1,
+      desc: "short converse mujer",
+      precio: 1800,
+      img: "./img2/short-converse-m.jfif",
+    },
+    {
+      id: 17,
+      nombre: "Short nike",
+      cantidad: 1,
+      desc: "short nike hombre",
+      precio: 2100,
+      img: "./img2/short-nike-cahllenger-m.jfif",
+    },
+    {
+      id: 18,
+      nombre: "Campera boca",
+      cantidad: 1,
+      desc: "campera boca adidas hombre",
+      precio: 11500,
+      img: "./img2/campera-adidas-boca.jpg",
+    },
+    {
+      id: 19,
+      nombre: "Short river",
+      cantidad: 1,
+      desc: "short river adidas hombre",
+      precio: 2600,
+      img: "./img2/short-river.jfif",
+    },
+    {
+      id: 20,
+      nombre: "Campera independiente",
+      cantidad: 1,
+      desc: "campera independiente puma mujer",
+      precio: 8700,
+      img: "./img2/campera-independiente-m.jfif",
+    },
+    {
+      id: 21,
+      nombre: "Camiseta Seleccion Argenina",
+      cantidad: 1,
+      desc: "camiseta argentina adidas hombre",
+      precio: 5800,
+      img: "img2/camiseta-arg-hombre.jfif",
+    },
+    {
+      id: 22,
+      nombre: "Camiseta Seleccion Argentina",
+      cantidad: 1,
+      desc: "camiseta argentina adidas nino",
+      precio: 3200,
+      img: "img2/camiseta-argentina.jfif",
+    },
+    {
+      id: 23,
+      nombre: "Camiseta lanus",
+      cantidad: 1,
+      desc: "camiseta peak lanus hombre",
+      precio: 2900,
+      img: "img2/camiseta-lanus.jpg",
+    },
+    {
+      id: 24,
+      nombre: "Camiseta racing",
+      cantidad: 1,
+      desc: "camiseta racing kappa hombre",
+      precio: 3250,
+      img: "img2/camiseta-racing-h.jfif",
+    },
+    {
+      id: 25,
+      nombre: "Camiseta river",
+      cantidad: 1,
+      desc: "camiseta river adidas hombre",
+      precio: 3800,
+      img: "img2/camiseta-river.jfif",
+    },
+    {
+      id: 26,
+      nombre: "Botines adidas sense",
+      cantidad: 1,
+      desc: "botines adidas hombre",
+      precio: 9900,
+      img: "./img2/botines-de-futbol-adidas-sense.jpg",
+    },
+    {
+      id: 27,
+      nombre: "Botines nike",
+      cantidad: 1,
+      desc: "botines nike hombre",
+      precio: 10700,
+      img: "./img2/botines-nike-h.jpg",
+    },
+    {
+      id: 28,
+      nombre: "Botines nike",
+      cantidad: 1,
+      desc: "botines nike nino",
+      precio: 5500,
+      img: "./img2/botines-nike-n.jpg",
+    },
+    {
+      id: 29,
+      nombre: "Ojotas adidas hombre",
+      cantidad: 1,
+      desc: "ojotas adidas hombre",
+      precio: 2100,
+      img: "./img2/ojota-adidas.jfif",
+    },
+    {
+      id: 30,
+      nombre: "Ojotas puma mujer",
+      cantidad: 1,
+      desc: "ojotas puma mujer",
+      precio: 1800,
+      img: "./img2/ojota-puma-m.jpg",
+    },
+    {
+      id: 31,
+      nombre: "Buzo adidas",
+      cantidad: 1,
+      desc: "buzo adidas hombre",
+      precio: 6600,
+      img: "./img2/buzo-adidas-h.jpg",
+    },
+    {
+      id: 32,
+      nombre: "Buzo adidas",
+      cantidad: 1,
+      desc: "buzo adidas mujer",
+      precio: 4900,
+      img: "./img2/buzo-adidas-m.jpg",
+    },
+    {
+      id: 33,
+      nombre: "Buzo adidas",
+      cantidad: 1,
+      desc: "buzo adidas nino",
+      precio: 2600,
+      img: "./img2/buzo-adidas-n.jpg",
+    },
+    {
+      id: 34,
+      nombre: "Buzo converse",
+      cantidad: 1,
+      desc: "buzo converse hombre",
+      precio: 3600,
+      img: "./img2/buzo-converse-m.jfif",
+    },
+    {
+      id: 35,
+      nombre: "Buzo nike",
+      cantidad: 1,
+      desc: "buzo nike hombre",
+      precio: 3200,
+      img: "./img2/buzo-nike-h.jpg",
+    },
+    {
+      id: 36,
+      nombre: "Buzo nike",
+      cantidad: 1,
+      desc: "buzo nike mujer",
+      precio: 2200,
+      img: "./img2/buzo-nike-m.jpg",
+    },
+  ];
+  const contenedor = document.querySelector("#contenedor");
+  const carritoContenedor = document.querySelector("#carritoContenedor");
+  const vaciarCarrito = document.querySelector("#vaciarCarrito");
+  const precioTotal = document.querySelector("#precioTotal");
+  const activarFuncion = document.querySelector("#activarFuncion");
+  const procesarCompra = document.querySelector("#procesarCompra");
+  const totalProceso = document.querySelector("#totalProceso");
+  const formulario = document.querySelector('#procesar-pago');
+  const inputBuscar = document.getElementById('buscar');
+  const celdas = document.getElementsByTagName('h6')
+  let carrito = [];
+  
+  if (activarFuncion) {
+    activarFuncion.addEventListener("click", procesarPedido);
+  }
+  
+  document.addEventListener("DOMContentLoaded", () => {
+    carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    mostrarCarrito();
+  
+    document.querySelector("#activarFuncion").click(procesarPedido);
+  });
+  if(formulario){
+    formulario.addEventListener('submit', enviarCompra)
+  }
+  
+  
+  if (vaciarCarrito) {
+    vaciarCarrito.addEventListener("click", () => {
+      carrito.length = [];
+      mostrarCarrito();
+    });
+  }
+  if (procesarCompra) {
+    procesarCompra.addEventListener("click", () => {
+      if (carrito.length === 0) {
+        Swal.fire({
+          title: "¡Tu carrito está vacio!",
+          text: "Compra algo para continuar con la compra",
+          icon: "error",
+          confirmButtonText: "Aceptar",
+        });
+      } else {
+        location.href = "./compra.html";
+      }
+    });
+  }
+  
+  stockProductos.forEach((prod) => {
+    const { id, nombre, precio, desc, img, cantidad } = prod;
+    if (contenedor) {
+      contenedor.innerHTML += `
+      <div class="card mt-4 card-principal" style="width: 18rem;">
+      <img class="card-img-top mt-2" src="${img}" alt="Card image cap">
+      <div class="card-body">
+        <h6 class="card-title ">${nombre}</h6>
+        <p class="card-text">Precio: ${precio}</p>
+        <p class="card-text articulo">Descripcion: ${desc}</p>
+        <p class="card-text">Cantidad: ${cantidad}</p>
+        <button class="btn btn-primary" onclick="agregarProducto(${id})">Comprar Producto</button>
+      </div>
+    </div>
+      `;
     }
-    e.stopPropagation()
-}
-
-const setCarrito = item => {
-    // console.log(item)
-    const producto = {
-        title: item.querySelector('h5').textContent,
-        precio: item.querySelector('p').textContent,
-        id: item.querySelector('button').dataset.id,
-        cantidad: 1
-    }
-    // console.log(producto)
-    if (carrito.hasOwnProperty(producto.id)) {
-        producto.cantidad = carrito[producto.id].cantidad + 1
-    }
-
-    carrito[producto.id] = { ...producto }
-    
-    pintarCarrito()
-}
-
-const pintarCarrito = () => {
-    items.innerHTML = ''
-
-    Object.values(carrito).forEach(producto => {
-        templateCarrito.querySelector('th').textContent = producto.id
-        templateCarrito.querySelectorAll('td')[0].textContent = producto.title
-        templateCarrito.querySelectorAll('td')[1].textContent = producto.cantidad
-        templateCarrito.querySelector('span').textContent = producto.precio * producto.cantidad
-        
-        //botones
-        templateCarrito.querySelector('.btn-info').dataset.id = producto.id
-        templateCarrito.querySelector('.btn-danger').dataset.id = producto.id
-
-        const clone = templateCarrito.cloneNode(true)
-        fragment.appendChild(clone)
-    })
-    items.appendChild(fragment)
-
-    pintarFooter()
-}
-
-const pintarFooter = () => {
-    footer.innerHTML = ''
-    
-    if (Object.keys(carrito).length === 0) {
-        footer.innerHTML = `
-        <th scope="row" colspan="5">Carrito vacío con innerHTML</th>
-        `
-        return
-    }
-    
-    // sumar cantidad y sumar totales
-    const nCantidad = Object.values(carrito).reduce((acc, { cantidad }) => acc + cantidad, 0)
-    const nPrecio = Object.values(carrito).reduce((acc, {cantidad, precio}) => acc + cantidad * precio ,0)
-    // console.log(nPrecio)
-
-    templateFooter.querySelectorAll('td')[0].textContent = nCantidad
-    templateFooter.querySelector('span').textContent = nPrecio
-
-    const clone = templateFooter.cloneNode(true)
-    fragment.appendChild(clone)
-
-    footer.appendChild(fragment)
-
-    const boton = document.querySelector('#vaciar-carrito')
-    boton.addEventListener('click', () => {
-        carrito = {}
-        pintarCarrito()
-    })
-
-}
-
-const btnAumentarDisminuir = e => {
-    // console.log(e.target.classList.contains('btn-info'))
-    if (e.target.classList.contains('btn-info')) {
-        const producto = carrito[e.target.dataset.id]
-        producto.cantidad++
-        carrito[e.target.dataset.id] = { ...producto }
-        pintarCarrito()
-    }
-
-    if (e.target.classList.contains('btn-danger')) {
-        const producto = carrito[e.target.dataset.id]
-        producto.cantidad--
-        if (producto.cantidad === 0) {
-            delete carrito[e.target.dataset.id]
-        } else {
-            carrito[e.target.dataset.id] = {...producto}
+  });
+  
+  const agregarProducto = (id) => {
+    const existe = carrito.some(prod => prod.id === id)
+  
+    if(existe){
+      const prod = carrito.map(prod => {
+        if(prod.id === id){
+          prod.cantidad++
         }
-        pintarCarrito()
+      })
+    } else {
+      const item = stockProductos.find((prod) => prod.id === id)
+      carrito.push(item)
     }
-    e.stopPropagation()
-}
+    mostrarCarrito()
+  };
+  
+  const mostrarCarrito = () => {
+    const modalBody = document.querySelector(".modal .modal-body");
+    if (modalBody) {
+      modalBody.innerHTML = "";
+      carrito.forEach((prod) => {
+        const { id, nombre, precio, img, cantidad } = prod;
+        console.log(modalBody);
+        modalBody.innerHTML += `
+        <div class="modal-contenedor">
+          <div>
+          <img class="img-fluid img-carrito" src="${img}"/>
+          </div>
+          <div>
+          <p>Producto class"": ${nombre}</p>
+        <p>Precio: ${precio}</p>
+        <p>Cantidad :${cantidad}</p>
+        <button class="btn btn-danger"  onclick="eliminarProducto(${id})">Eliminar producto</button>
+          </div>
+        </div>
+        
+    
+        `;
+      });
+    }
+  
+    if (carrito.length === 0) {
+      console.log("Todavia no compraste nada");
+      modalBody.innerHTML = `
+      <p class="text-center text-primary parrafo">¡Aun no agregaste nada!</p>
+      `;
+    } else {
+      console.log("Fijate tu carrito!");
+    }
+    carritoContenedor.textContent = carrito.length;
+  
+    if (precioTotal) {
+      precioTotal.innerText = carrito.reduce(
+        (acc, prod) => acc + prod.cantidad * prod.precio,
+        0
+      );
+    }
+  
+    guardarStorage();
+  };
+  
+  function guardarStorage() {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+  }
+  
+  function eliminarProducto(id) {
+    const ropaId = id;
+    carrito = carrito.filter((ropa) => ropa.id !== ropaId);
+    mostrarCarrito();
+  }
+  function procesarPedido() {
+    carrito.forEach((prod) => {
+      const listaCompra = document.querySelector("#lista-compra tbody");
+      const { id, nombre, precio, img, cantidad } = prod;
+      if (listaCompra) {
+        const row = document.createElement("tr");
+        row.innerHTML += `
+                <td>
+                <img class="img-fluid img-carrito" src="${img}"/>
+                </td>
+                <td>${nombre}</td>
+              <td>${precio}</td>
+              <td>${cantidad}</td>
+              <td>${precio * cantidad}</td>
+              `;
+        listaCompra.appendChild(row);
+      }
+    });
+    totalProceso.innerText = carrito.reduce(
+      (acc, prod) => acc + prod.cantidad * prod.precio,
+      0
+    );
+  }
+  
+   function enviarCompra(e){
+     e.preventDefault()
+     const persona = document.querySelector('#persona').value
+     const email = document.querySelector('#correo').value
+  
+     if(email === '' || persona == ''){
+       Swal.fire({
+         title: "¡Debes completar tu email y nombre!",
+         text: "Rellena el formulario",
+         icon: "error",
+         confirmButtonText: "Aceptar",
+     })
+   } else {
+  
+    const btn = document.getElementById('button');
+  
+  
+     btn.value = 'Enviando...';
+  
+     const serviceID = 'default_service';
+     const templateID = 'template_qxwi0jn';
+  
+     emailjs.sendForm(serviceID, templateID, this)
+      .then(() => {
+        btn.value = 'Finalizar compra';
+        alert('Correo enviado!');
+      }, (err) => {
+        btn.value = 'Finalizar compra';
+        alert(JSON.stringify(err));
+      });
+      
+     const spinner = document.querySelector('#spinner')
+     spinner.classList.add('d-flex')
+     spinner.classList.remove('d-none')
+  
+     setTimeout(() => {
+       spinner.classList.remove('d-flex')
+       spinner.classList.add('d-none')
+       formulario.reset()
+  
+       const alertExito = document.createElement('p')
+       alertExito.classList.add('alert', 'alerta', 'd-block', 'text-center', 'col-12', 'mt-2', 'alert-success')
+       alertExito.textContent = 'Compra realizada correctamente'
+       formulario.appendChild(alertExito)
+  
+       setTimeout(() => {
+         alertExito.remove()
+       }, 3000)
+  
+  
+     }, 3000)
+   }
+   localStorage.clear()
+   }
+  
+  
+  
+  // inputBuscar.addEventListener ('keyup', (e) =>{
+  //   let texto = e.target.value
+  //   let er = new RegExp(texto, "i")
+  //   for (let i = 0; i < celdas.length; i++) {
+  //     let valor = celdas[i];
+  //     if (er.test(valor.innerText)) {
+  //       valor.classList.remove("ocultar")
+  //     } else {
+  //       console.log(valor);
+  //       valor.classList.add("ocultar")
+  //     }
+  //   }
+  // })
+  
